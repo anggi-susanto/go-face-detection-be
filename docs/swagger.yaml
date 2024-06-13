@@ -1,0 +1,103 @@
+definitions:
+  domain.Photo:
+    properties:
+      faces_detected:
+        type: integer
+      id:
+        type: integer
+      photo_url:
+        type: string
+      status:
+        type: string
+      timestamp:
+        type: string
+    type: object
+  rest.ResponseError:
+    properties:
+      message:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /photo/{id}:
+    get:
+      consumes:
+      - application/json
+      description: get photo
+      parameters:
+      - description: photo id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Photo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest.ResponseError'
+      summary: get photo
+      tags:
+      - Face Detection
+  /result/{id}:
+    get:
+      consumes:
+      - application/json
+      description: check photo result
+      parameters:
+      - description: photo id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/domain.Photo'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest.ResponseError'
+      summary: check photo result
+      tags:
+      - Face Detection
+  /upload:
+    post:
+      consumes:
+      - application/json
+      description: upload image for face detection
+      parameters:
+      - description: photp data
+        in: body
+        name: photo
+        required: true
+        schema:
+          $ref: '#/definitions/domain.Photo'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/domain.Photo'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/rest.ResponseError'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/rest.ResponseError'
+      summary: upload image for face detection
+      tags:
+      - Face Detection
+swagger: "2.0"
